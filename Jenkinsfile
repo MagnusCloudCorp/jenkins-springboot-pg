@@ -1,5 +1,5 @@
 
-#!/usr/bin/env groovy
+// #!/usr/bin/env groovy
 
 // All valid Declarative Pipelines must be enclosed within a pipeline block.
 // For syntax for pipeline components: see https://jenkins.io/doc/book/pipeline/syntax
