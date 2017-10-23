@@ -38,11 +38,11 @@ pipeline {
                 echo 'Deploying....'
             }
         }
-        post {
-            success {
-                echo 'This will run only if successful'
-                sh 'docker build -t benabs/test-sping-boot .'
-            }
+    }
+    post {
+        success {
+            echo 'This will run only if successful'
+            sh 'docker build -t benabs/test-sping-boot .'
         }
     }
 }
