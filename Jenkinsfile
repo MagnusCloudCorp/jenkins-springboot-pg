@@ -24,7 +24,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo '=== Build Started '
-                sh './mvnw clean build'
+                sh './mvnw clean install'
             }
         }
         stage('Test') {
@@ -36,6 +36,12 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
+            }
+        }
+        post {
+            success {
+                echo 'This will run only if successful'
+                sh 'docker build -t benabs/test-sping-boot .'
             }
         }
     }
