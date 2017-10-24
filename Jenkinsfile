@@ -9,11 +9,7 @@ pipeline {
     //    the Pipeline. Without an agent directive, not only is the Declarative Pipeline not valid, it would
     //    not be capable of doing any work! By default the agent directive ensures that the source repository
     //    is checked out and made available for steps in the subsequent stages`
-    agent {
-        docker {
-            image 'openjdk:8-jdk-alpine'
-        }
-    }
+    agent any
 
     // stages {} can have multiple stages. (Build, Test, Deploy, Etc.) This we can define according to our pipeline
     // design.
@@ -39,6 +35,7 @@ pipeline {
         }
         stage('Build and Deploy Docker Image') {
             steps {
+
                 sh 'docker build -t benabs/test-sping-boot .'
             }
         }
