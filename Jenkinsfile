@@ -4,7 +4,9 @@
 // All valid Declarative Pipelines must be enclosed within a pipeline block.
 // For syntax for pipeline components: see https://jenkins.io/doc/book/pipeline/syntax
 pipeline {
-
+environment {
+    DOCKER = credentials('DOCKER-HUB')
+}
     //    The agent directive, which is required, instructs Jenkins to allocate an executor and workspace for
     //    the Pipeline. Without an agent directive, not only is the Declarative Pipeline not valid, it would
     //    not be capable of doing any work! By default the agent directive ensures that the source repository
@@ -35,15 +37,9 @@ pipeline {
         }
         stage('Build and Deploy Docker Image') {
             steps {
-
-                // sh 'docker build -t benabs/test-sping-boot .'
-                // sh 'docker push  benabs/test-sping-boot'
-
-                 newImage = docker.build('benabs/test-sping-boot')
-                docker.withRegistry("https://index.docker.io/v1/", 'DOCKER-HUB'){
-                     newImage.push("latest")
-                }
-
+                sh 'docker login -u ${DOCKER_USR} -p ${DOCKER_PSW}'
+                sh 'docker build -t benabs/test-sping-boot .'
+                sh 'docker push  benabs/test-sping-boot'
             }
         }
         stage('Deploy') {
