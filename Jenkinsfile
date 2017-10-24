@@ -23,21 +23,26 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo '=== Build Started '
-                sh './mvnw clean install package -q'
+                // echo '=== Build Started '
+                // sh './mvnw clean install package -q'
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing..'
-                sh './mvnw test -q'
+                // echo 'Testing..'
+                // sh './mvnw test -q'
             }
         }
         stage('Build and Deploy Docker Image') {
             steps {
 
-                sh 'docker build -t benabs/test-sping-boot .'
-                sh 'docker push  benabs/test-sping-boot'
+                // sh 'docker build -t benabs/test-sping-boot .'
+                // sh 'docker push  benabs/test-sping-boot'
+
+                 newImage = docker.build('benabs/test-sping-boot')
+                docker.withRegistry("https://index.docker.io/v1/", 'DOCKER-HUB'){
+                     newImage.push("latest")
+
             }
         }
         stage('Deploy') {
