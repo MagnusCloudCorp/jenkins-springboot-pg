@@ -42,6 +42,7 @@ pipeline {
                  newImage = docker.build('benabs/test-sping-boot')
                 docker.withRegistry("https://index.docker.io/v1/", 'DOCKER-HUB'){
                      newImage.push("latest")
+                }
 
             }
         }
