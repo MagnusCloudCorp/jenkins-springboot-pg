@@ -4,14 +4,15 @@
 // All valid Declarative Pipelines must be enclosed within a pipeline block.
 // For syntax for pipeline components: see https://jenkins.io/doc/book/pipeline/syntax
 pipeline {
-environment {
-    DOCKER = credentials('DOCKER-HUB')
-}
+
     //    The agent directive, which is required, instructs Jenkins to allocate an executor and workspace for
     //    the Pipeline. Without an agent directive, not only is the Declarative Pipeline not valid, it would
     //    not be capable of doing any work! By default the agent directive ensures that the source repository
     //    is checked out and made available for steps in the subsequent stages`
     agent any
+    environment {
+        DOCKER = credentials('DOCKER-HUB')
+    }
 
     // stages {} can have multiple stages. (Build, Test, Deploy, Etc.) This we can define according to our pipeline
     // design.
@@ -25,14 +26,14 @@ environment {
     stages {
         stage('Build') {
             steps {
-                // echo '=== Build Started '
-                // sh './mvnw clean install package -q'
+                echo '=== Build Started '
+                sh './mvnw clean install package -q'
             }
         }
         stage('Test') {
             steps {
-                // echo 'Testing..'
-                // sh './mvnw test -q'
+                echo 'Testing..'
+                sh './mvnw test -q'
             }
         }
         stage('Build and Deploy Docker Image') {
