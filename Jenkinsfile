@@ -28,25 +28,24 @@ pipeline {
         stage('Build') {
             steps {
                 echo '=== Build Started '
-                sh './mvnw clean install'
+                sh './mvnw clean install package -q'
             }
         }
         stage('Test') {
             steps {
                 echo 'Testing..'
-                sh './mvnw test'
+                sh './mvnw test -q'
+            }
+        }
+        stage('Build and Deploy Docker Image') {
+            steps {
+                sh 'docker build -t benabs/test-sping-boot .'
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
             }
-        }
-    }
-    post {
-        success {
-            echo 'This will run only if successful'
-            sh 'docker build -t benabs/test-sping-boot .'
         }
     }
 }
