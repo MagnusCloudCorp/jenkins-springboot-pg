@@ -38,8 +38,8 @@ pipeline {
         }
         stage('Build and Deploy Docker Image') {
             steps {
-                 sh 'echo  ${DOCKER_USR} && echo ${DOCKER_PSW}'
-                sh 'docker login -u ${DOCKER_USR} -p ${DOCKER_PSW}'
+                 sh 'echo  $DOCKER_USR && echo $DOCKER_PSW'
+                sh 'docker login -u $DOCKER_USR -p $DOCKER_PSW'
                 sh 'docker build -t benabs/test-sping-boot .'
                 sh 'docker push  benabs/test-sping-boot'
             }
